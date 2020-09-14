@@ -2,6 +2,8 @@
 
 namespace Config;
 
+$routes->setAutoRoute(false);
+
 $routes = Services::routes();
 
 if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
