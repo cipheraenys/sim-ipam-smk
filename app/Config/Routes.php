@@ -16,6 +16,7 @@ $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 $routes->setAutoRoute(false);
 
+
 $routes->get('/', 'Dashboard::index');
 
 $routes->get('ipam', 'Ipam::index');
