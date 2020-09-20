@@ -6,11 +6,7 @@
     <title><?= esc($title ?? 'SIM-IPAM Lab SMK') ?></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
-    <style>
-        body { background-color: #f4f6f9; }
-        .card { border: none; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
-        .navbar-brand i { color: #00d1b2; }
-    </style>
+    <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
 </head>
 <body>
 
