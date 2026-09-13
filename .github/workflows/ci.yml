@@ -30,4 +30,11 @@ jobs:
         run: find app -name "*.php" -print0 | xargs -0 -n1 php -l
 
       - name: Framework smoke test
-        run: php spark list
+        run: |
+          php spark serve --host 127.0.0.1 --port 8080 > serve.log 2>&1 &
+          SERVE_PID=$!
+          sleep 5
+          code=$(curl --max-time 10 -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8080/calculator)
+          echo "GET /calculator -> $code"
+          kill $SERVE_PID
+          test "$code" = "200"
