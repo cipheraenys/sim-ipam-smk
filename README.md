@@ -10,9 +10,9 @@ A simple IP Address Management (IPAM) web app for tracking IPv4 allocations
 across computer-lab rooms: dashboard statistics, full CRUD with duplicate
 prevention, per-room filtering, a subnetting calculator, and CSV export.
 
-> Written in September 2020 and restored from a local
-> backup and republished in September 2026. The application code keeps its
-> original shape. Repository tooling was added during the restoration.
+> Written in September 2020, restored from a local backup, and republished in
+> September 2026. The application code keeps its original shape. Repository
+> tooling was added during the restoration.
 
 ## Table of contents
 
@@ -60,3 +60,61 @@ prevention, per-room filtering, a subnetting calculator, and CSV export.
 
    ```bash
    composer install
+   ```
+
+2. Create a `.env` file in the project root and adjust the database
+   configuration:
+
+   ```ini
+   CI_ENVIRONMENT = development
+
+   database.default.hostname = 127.0.0.1
+   database.default.database = sim_ipam_smk
+   database.default.username = root
+   database.default.password =
+   database.default.DBDriver = MySQLi
+   database.default.port     = 3306
+   ```
+
+3. Create the database:
+
+   ```sql
+   CREATE DATABASE sim_ipam_smk CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   ```
+
+4. Run the migration and the seeder (the seeder ships 10 sample lab devices):
+
+   ```bash
+   php spark migrate
+   php spark db:seed IpamSeeder
+   ```
+
+5. Start the development server:
+
+   ```bash
+   php spark serve
+   ```
+
+   The app is available at `http://localhost:8080`.
+
+## Project structure
+
+```
+app/
+├── Config/Routes.php          # route definitions
+├── Controllers/
+│   ├── Dashboard.php          # statistics for the landing page
+│   ├── Ipam.php               # CRUD, filtering, CSV export
+│   └── Calculator.php         # subnetting calculator
+├── Database/
+│   ├── Migrations/            # ip_allocations table
+│   └── Seeds/IpamSeeder.php   # 10 sample lab devices
+├── Helpers/network_helper.php # IPv4 math (64-bit safe)
+├── Models/IpamModel.php       # model + validation rules
+└── Views/                     # Bootstrap 4 pages
+```
+
+
+## License
+
+[MIT](LICENSE)
