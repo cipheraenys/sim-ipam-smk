@@ -33,8 +33,14 @@ jobs:
         run: |
           php spark serve --host 127.0.0.1 --port 8080 > serve.log 2>&1 &
           SERVE_PID=$!
-          sleep 5
-          code=$(curl --max-time 10 -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8080/calculator)
-          echo "GET /calculator -> $code"
-          kill $SERVE_PID
-          test "$code" = "200"
+          ok=false
+          for i in $(seq 1 10); do
+            sleep 2
+            if curl --max-time 3 -s -o /dev/null http://127.0.0.1:8080/calculator; then
+              ok=true
+              break
+            fi
+          done
+          kill "$SERVE_PID" 2>/dev/null || true
+          cat serve.log
+          $ok || { echo "::error::Calculator page did not respond with 200"; exit 1; }
