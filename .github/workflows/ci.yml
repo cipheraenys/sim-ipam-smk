@@ -29,18 +29,21 @@ jobs:
       - name: Lint application sources
         run: find app -name "*.php" -print0 | xargs -0 -n1 php -l
 
+      # The spark CLI router (ci(:any) catchall) is unreliable on the
+      # ubuntu runner with CodeIgniter 4.0.5, so the smoke test drives
+      # the built-in server directly with the framework's rewrite script.
       - name: Framework smoke test
         run: |
-          php spark serve --host 127.0.0.1 --port 8080 > serve.log 2>&1 &
-          SERVE_PID=$!
+          php -S 127.0.0.1:8080 -t public vendor/codeigniter4/framework/system/Commands/Server/rewrite.php > serve.log 2>&1 &
+          SERVER_PID=$!
           ok=false
           for i in $(seq 1 10); do
-            sleep 2
+            sleep 1
             if curl --max-time 3 -s -o /dev/null http://127.0.0.1:8080/calculator; then
               ok=true
               break
             fi
           done
-          kill "$SERVE_PID" 2>/dev/null || true
+          kill "$SERVER_PID" 2>/dev/null || true
           cat serve.log
           $ok || { echo "::error::Calculator page did not respond with 200"; exit 1; }
