@@ -1,63 +1,62 @@
-# CodeIgniter 4 Application Starter
+# SIM-IPAM Lab SMK
 
-## What is CodeIgniter?
+![CI](https://github.com/cipheraenys/sim-ipam-smk/actions/workflows/ci.yml/badge.svg)
+![PHP](https://img.shields.io/badge/php-7.4-777BB4?logo=php&logoColor=white)
+![CodeIgniter](https://img.shields.io/badge/codeigniter-4.0.5-EF4238?logo=codeigniter&logoColor=white)
+![License](https://img.shields.io/github/license/cipheraenys/sim-ipam-smk)
+![Version](https://img.shields.io/github/v/tag/cipheraenys/sim-ipam-smk?label=version)
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](http://codeigniter.com).
+A simple IP Address Management (IPAM) web app for tracking IPv4 allocations
+across computer-lab rooms: dashboard statistics, full CRUD with duplicate
+prevention, per-room filtering, a subnetting calculator, and CSV export.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+> Written in September 2020 and restored from a local
+> backup and republished in September 2026. The application code keeps its
+> original shape. Repository tooling was added during the restoration.
 
-More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
+## Table of contents
 
-The user guide corresponding to this version of the framework can be found
-[here](https://codeigniter4.github.io/userguide/).
+- [Features](#features)
+- [Tech stack](#tech-stack)
+- [Requirements](#requirements)
+- [Getting started](#getting-started)
+- [Project structure](#project-structure)
+- [License](#license)
 
-## Installation & updates
+---
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+## Features
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+- Dashboard statistics: total registered IPs, breakdown per device type,
+  distribution per lab room
+- Full IP allocation CRUD with form validation: IPv4 format, duplicate IP
+  prevention within the same lab, MAC address format
+- Filter by lab room and search by IP address, device name, or MAC address
+- IPv4 subnetting calculator: subnet mask, wildcard mask, network address,
+  broadcast, valid host range, total hosts
+- Export all allocations to a CSV file
+- Delete confirmation with SweetAlert2
 
-## Setup
+## Tech stack
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+| Component | Version |
+| --- | --- |
+| CodeIgniter | 4.0.5 |
+| PHP | 7.4 (intl and mbstring extensions) |
+| MySQL / MariaDB | MariaDB 10.4 shipped with XAMPP |
+| Bootstrap | 4.5.2 via CDN |
+| FontAwesome | 5.14.0 via CDN |
+| SweetAlert2 | v10 via CDN |
 
-## Important Change with index.php
+## Requirements
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+- PHP 7.4 or newer with the `intl` and `mbstring` extensions
+- MySQL 5.7+ / MariaDB 10.3+
+- Composer
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+## Getting started
 
-**Please** read the user guide for a better explanation of how CI4 works!
+1. Clone this repository and install dependencies:
 
-## Repository Management
-
-We use Github issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
-
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
-
-## Server Requirements
-
-PHP version 7.2 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
-- xml (enabled by default - don't turn it off)
+   ```bash
+   composer install
