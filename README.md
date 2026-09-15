@@ -114,7 +114,6 @@ app/
 └── Views/                     # Bootstrap 4 pages
 ```
 
-
 ## License
 
 [MIT](LICENSE)
